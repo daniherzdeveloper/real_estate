@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^szche$e%d@v1+%1e@w74cwl3)6n!n9o7=&-t=i1sora7a41hp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '68.183.109.180', 'daniherzdeveloper.com', 'www.daniherzdeveloper.com']
 
@@ -121,12 +121,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-
-# Carpeta global de archivos estáticos
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+STATIC_ROOT = '/var/www/html/static/'  # Ruta donde se recopilarán los archivos estáticos
 
 
 # Default primary key field type
