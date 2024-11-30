@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Propiedades Disponibles</h1>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for propiedad in propiedades %}
+        <div class="col">
+            <a href="{{ propiedad.get_detalle_url }}" class="text-decoration-none text-dark">
+                <div class="card shadow-sm">
+                    <img src="{{ propiedad.imagen.url }}" class="card-img-top" alt="Imagen de {{ propiedad.titulo }}">
+                    <div class="card-body">
+                        <h5 class="card-title">${{ propiedad.precio }} - {{ propiedad.titulo }}</h5>
+                        <p class="card-subtitle mb-2 text-muted">
+                            <i class="bi bi-geo-alt-fill me-1"></i> {{ propiedad.lugar }}
+                        </p>
+                        <p class="card-text text-muted">{{ propiedad.descripcion }}</p>
+                        <div class="d-flex justify-content-between my-3">
+                            <span><i class="bi bi-bucket-fill me-1"></i> {{ propiedad.banios }} Baño(s)</span>
+                            <span><i class="bi bi-house-door-fill me-1"></i> {{ propiedad.cuartos }} Cuarto(s)</span>
+                        </div>
+                        <!-- Botón fuera del enlace principal -->
+                        <a href="{{ propiedad.get_contactar_url }}" class="btn btn-success w-100">Contactar Vendedor</a>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <p>No hay propiedades disponibles en este momento.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

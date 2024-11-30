@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h1 class="mb-0">Mis Propiedades</h1>
+        <!-- Botón para abrir la ventana modal -->
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearPropiedadModal">
+            Crear Propiedad
+        </button>
+    </div>
+
+    <!-- Modal de Bootstrap -->
+    <div class="modal fade" id="crearPropiedadModal" tabindex="-1" aria-labelledby="crearPropiedadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crearPropiedadModalLabel">Crear Nueva Propiedad</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" action="{% url 'crear_propiedad' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="titulo" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="titulo" name="titulo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="precio" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="precio" name="precio" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lugar" class="form-label">Lugar</label>
+                            <input type="text" class="form-control" id="lugar" name="lugar" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tipo" class="form-label">Tipo de Propiedad</label>
+                            <select class="form-select" id="tipo" name="tipo" required>
+                                {% for value, label in tipo_choices %}
+                                    <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>    
+                        <div class="mb-3">
+                            <label for="banios" class="form-label">Número de Baños</label>
+                            <input type="number" class="form-control" id="banios" name="banios" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cuartos" class="form-label">Número de Cuartos</label>
+                            <input type="number" class="form-control" id="cuartos" name="cuartos" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imagen" class="form-label">Imagen</label>
+                            <input type="file" class="form-control" id="imagen" name="imagen">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    {% if propiedades %}
+        {% for propiedad in propiedades %}
+        <div class="card mb-4">
+            <div class="row g-0 align-items-center">
+                <div class="col-md-3">
+                    <!-- Imagen de la propiedad -->
+                    <img src="{{ propiedad.imagen.url }}" 
+                         class="img-fluid rounded" 
+                         alt="Imagen de {{ propiedad.titulo }}" 
+                         style="object-fit: cover;">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ propiedad.titulo }}</h5>
+                        <p class="card-text">{{ propiedad.descripcion|truncatechars:150 }}</p>
+                        <p class="card-text text-primary fw-bold">Precio: ${{ propiedad.precio }}</p>
+                        <p class="card-text">
+                            <small class="text-muted">Publicado el: {{ propiedad.fecha_publicacion|date:"d M Y" }}</small>
+                        </p>
+                        <div class="d-flex gap-2 mt-3">
+                            <a href="" class="btn btn-warning btn-sm">Editar</a>
+                            <form action="" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No tienes propiedades publicadas.</p>
+    {% endif %}
+</div>
+{% endblock %}

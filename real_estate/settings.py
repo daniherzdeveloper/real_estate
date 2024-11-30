@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^szche$e%d@v1+%1e@w74cwl3)6n!n9o7=&-t=i1sora7a41hp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '68.183.109.180', 'daniherzdeveloper.com', 'www.daniherzdeveloper.com']
 
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'real_estate_app',
+    'real_estate_app.apps.RealEstateAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -117,9 +117,18 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOGIN_REDIRECT_URL = '/'  # Redirige después de iniciar sesión exitosamente
+LOGOUT_REDIRECT_URL = '/login/'  # Redirige después de cerrar sesión
+LOGIN_URL = '/login/'  # URL para el login
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [

@@ -16,7 +16,20 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.auth.views import LoginView, LogoutView
+
 
 urlpatterns = [
     path('', views.home, name='home'),  # Ruta para la página de inicio
-]
+    path('propiedades/', views.listar_propiedades, name='listar_propiedades'),
+    path('registro/', views.registro, name='registro'),
+    path('login/', LoginView.as_view(template_name='real_estate_app/login.html'), name='login'),
+    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('mi-cuenta/', views.mi_cuenta, name='mi_cuenta'),
+    path('mis-propiedades/', views.mis_propiedades, name='mis_propiedades'),
+    path('crear_propiedad/', views.crear_propiedad, name='crear_propiedad'),
+    path('suscripcion/', views.suscripcion, name='suscripcion'),
+  
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
